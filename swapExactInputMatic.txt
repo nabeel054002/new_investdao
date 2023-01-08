@@ -1,0 +1,8 @@
+Make function payable
+Pass input token as wrapped token
+amountIn as msg.value
+Then pass msg.value while calling exactInputSingle
+
+// to be able to implement this functionality
+ 
+ 
