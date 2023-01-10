@@ -161,10 +161,7 @@ export default function Home() {
       });
     }
   }, [])
-  // useEffect(()=>{
-  //   fetchDeadline();
-  // }, [proposalsTab])
-
+  
   useEffect(() => {
     if (proposalsTab === "vote") {
       console.log("here_this_this")
