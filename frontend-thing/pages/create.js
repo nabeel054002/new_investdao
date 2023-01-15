@@ -9,8 +9,8 @@ import {AMF_ADDRESS, AMF_ABI} from "../constants/index.js";
 export default function create() {
 
     const web3ModalRef = useRef();
-  
     const [walletConnected, setWalletConnected] =  useState(false);
+    const [totalNumberOfTokens, setTotalNumberOfTokens] = useState(0)
     const [userBalance, setUserBalance] = useState(0);
     const [tokenName, setTokenName] = useState("");
     const [tokenAddress, setTokenAddress] = useState("");
@@ -19,10 +19,10 @@ export default function create() {
     const getProviderOrSigner = async (needSigner = false) => {
       // Connect to Metamask
       // Since we store `web3Modal` as a reference, we need to access the `current` value to get access to the underlying object
-    //   console.log(web3ModalRef.current);
+        // console.log(web3ModalRef.current);
     //   await test();
         const json = web3ModalRef.current
-        console.log(json)
+        // console.log(json)
         const provider = await web3ModalRef.current.connect();
         const web3Provider = new providers.Web3Provider(provider);
 
@@ -49,7 +49,12 @@ export default function create() {
         console.error(err);
       }
     }
-
+    const getTotalNumberOfTokens = async ()=>{
+      const provider = await getProviderOrSigner();
+      const amfContract = new Contract(AMF_ADDRESS, AMF_ABI, provider);
+      const balance_local = await amfContract.totalSupply();
+      setTotalNumberOfTokens(balance_local.toString());
+    }
     useEffect(()=>{
         if(!walletConnected){
           web3ModalRef.current = new Web3Modal({
@@ -111,7 +116,7 @@ export default function create() {
                 }}></input><br/>
             </div>
                 <input type="submit" onClick = {
-                    createProposal()
+                    createProposal
                 }></input>
             </form>
         </div>)
